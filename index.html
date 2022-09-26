@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            Password checker
+        </div>
+        <form action="/">
+            <input type="password" onkeyup="zapochni()" placeholder="Enter a password">
+            <span class="show">SHOW</span>
+            <div class="message"></div>
+        </form>
+    </div>
+
+
+    <script>
+        const input=document.querySelector('input');
+        const message=document.querySelector('.message');
+        const show=document.querySelector('.show');
+
+        let WeakPassword = /[a-z]/;
+        let MediumPassword = /\d+/;
+        let StrongPassword = /.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/;
+
+        function zapochni() {
+            if(input.value !== '') {
+               show.style.display="block";
+            }
+            if((input.value.length <=3) && (input.value.match(WeakPassword) || input.value.match(MediumPassword) || input.value.match(StrongPassword))) {
+                 message.textContent= "Your password is too weak";
+            }
+            else if (input.value.length >3 &&input.value.match(WeakPassword) && input.value.match(MediumPassword) ){
+                message.textContent= "Your password is medium";
+            }
+            if(input.value.length >8 && input.value.match(WeakPassword) && input.value.match(MediumPassword) && input.value.match(StrongPassword)){
+                message.textContent= "Your password is strong";
+            }
+            
+            show.onclick= function(){
+                if (input.type=="password") {
+                    input.type= "text";
+                    show.textContent= "HIDE";
+                    show.style.color="red"
+                } else {
+                    input.type= "password";
+                    show.textContent= "SHOW";
+                    show.style.color="black"
+                }
+            }
+        }
+    </script>
+</body>
+</html>
